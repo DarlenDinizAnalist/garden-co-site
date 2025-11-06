@@ -37,7 +37,6 @@
         letter-spacing:3px;
         color:#333;
         text-align:center;
-        /* Reduzindo a margem de topo para que o padding da seção faça o espaçamento */
         margin: 0 0 30px; 
         font-size: 32px;
         border-bottom: 3px solid var(--accent);
@@ -155,10 +154,9 @@
         background:linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.35) 100%);
         z-index:1;
     }
-    /* AJUSTE AQUI: Aumentei o margin-bottom de 150px para 250px para empurrar todo o conteúdo mais para baixo */
     .hero-center{
         z-index:3;
-        margin:auto 0 250px; /* Alterado de 150px para 250px para descer o bloco central */
+        margin:auto 0 250px; /* Empurra o conteúdo para baixo */
         text-align:center;
         color:#fff;
         padding:0 18px;
@@ -171,12 +169,11 @@
     .hero-title{font-family:oswald, sans-serif;font-size:36px;letter-spacing:2px;margin:20px 0 8px}
     .hero-sub{font-size:16px;color:rgba(255,255,255,0.92);max-width:680px;margin:0 auto;line-height:1.6}
     
-    /* Esta seção de introdução AGORA ESTÁ DENTRO DA view-home, mas NÃO do hero. */
+    /* Conteúdo da Home que fica logo abaixo do Hero */
     .home-intro {
-        padding: 40px 18px; 
+        padding: 40px 18px 60px; 
         text-align: center;
-        /* Se o problema de sobreposição estivesse aqui, este padding resolveria: */
-        padding-top: calc(var(--header-height) + 20px);
+        padding-top: 40px; 
     }
 
 
@@ -252,15 +249,13 @@
 </head>
 <body>
   
-  <!-- HEADER - Fixo e Responsivo -->
   <nav role="navigation" aria-label="Menu Principal e Identidade">
     <header id="mainHeader">
       <div class="logo-wrap">
         <a href="#home" class="nav-link" aria-label="Ir para o início da página">
-            <div class="logo">
-                <!-- Mantive sua imagem de logo original, apenas ajustando o src -->
-                <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/GardenCO/5ffa9ef68f42d833eee50eee619e8aa30bdeb8cb/WhatsApp%20Image%202025-11-03%20at%2012.19.26.jpeg" alt="Logo Garden & CO Paisagismo">
-            </div>
+          <div class="logo">
+            <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/GardenCO/b6566efba18d901ef0e9112b3f44d7a91f600562/WhatsApp%20Image%202025-11-05%20at%2022.49.17.jpeg" alt="Logo Garden & CO Paisagismo">
+          </div>
         </a>
       </div>
       
@@ -279,7 +274,6 @@
     </header>
   </nav>
 
-  <!-- Menu Overlay Mobile -->
   <div class="menu-overlay" id="menuoverlay">
     <nav>
       <ul class="menu-list">
@@ -293,7 +287,6 @@
 
   <main>
     
-    <!-- === 1. VISTA INÍCIO (HOME) === -->
     <section id="view-home" class="view-container active">
         <div class="hero">
             <div class="overlay"></div>
@@ -305,25 +298,19 @@
               <h1 class="hero-title">GARDEN & CO</h1>
               <p class="hero-sub">Paisagismo com elegância natural. Projetos personalizados e soluções sustentáveis para residências e empresas.</p>
               
-              <!-- Mantive a margem interna do botão em 60px para um bom espaçamento entre o texto e o botão -->
-              <a href="#projetos" class="submit-button nav-link" style="margin-top: 60px; font-size: 16px;">Ver Projetos</a>
+              <div style="margin-top: 35px;"></div>
+    <a href="#projetos" class="submit-button nav-link" style="font-size: 16px;">Ver Projetos</a>
+
             </div>
         </div>
         
-        <!-- A seção home-intro não está mais dentro do view-home para evitar a sobreposição de conteúdo -->
-        <div class="home-intro view-container active" style="padding-top: 40px;">
+        <div class="home-intro">
             <h2 class="section-title">Nossa Filosofia</h2>
             <p style="max-width: 600px; margin: 0 auto; line-height: 1.6;">Transformamos espaços comuns em refúgios verdes. Nossa paixão é criar ambientes que inspirem tranquilidade e beleza, sempre respeitando o equilíbrio da natureza. Clique em **NOSSOS PROJETOS** para ver o que fazemos, ou em **CONTATO** para um orçamento rápido.</p>
         </div>
     </section>
     
-    <!-- MANTIVE ESTA SECTION APENAS POR SEGURANÇA, MAS O ID "view-home" É O PRINCIPAL -->
-    <!-- Se você quiser que o "Nossa Filosofia" apareça na Home, ele deve ser parte da seção de Home. -->
-    <!-- Removido o ID da div home-intro para não duplicar o controle do JS -->
-
-    <!-- === 2. VISTA QUEM SOMOS === -->
     <section id="view-quemsomos" class="view-container">
-        <!-- O título QUEM SOMOS é o primeiro elemento após o padding compensado -->
         <h2 class="section-title">QUEM SOMOS</h2> 
         
         <div id="garden-co" class="about-content">
@@ -345,13 +332,12 @@
         </div>
     </section>
 
-    <!-- === 3. VISTA NOSSOS PROJETOS === -->
     <section id="view-projetos" class="view-container">
         <h2 class="section-title">NOSSOS PROJETOS</h2>
         <p style="text-align:center; color:var(--muted); font-size: 16px;">Conheça nossas duas linhas principais de serviço, focadas em beleza e sustentabilidade.</p>
         
         <div style="margin-top:28px">
-          <h3 class="section-title project-line-title" style="border:none;">PAISAGISMO PERMANENTE</h3>
+          <h3 class="section-title project-line-title" style="border:none; font-size: 28px;">PAISAGISMO PERMANENTE</h3>
           <div class="grid">
             <article class="service-card">
               <h4>Projetos Residenciais</h4>
@@ -369,7 +355,7 @@
         </div>
 
         <div style="margin-top:50px">
-          <h3 class="section-title project-line-title" style="border:none;">PAISAGISMO NATURAL E SUSTENTÁVEL</h3>
+          <h3 class="section-title project-line-title" style="border:none; font-size: 28px;">PAISAGISMO NATURAL E SUSTENTÁVEL</h3>
           <div class="grid">
             <article class="service-card">
               <h4>Jardins Nativos</h4>
@@ -387,7 +373,6 @@
         </div>
     </section>
 
-    <!-- === 4. VISTA CONTATO === -->
     <section id="view-contato" class="view-container">
         <h2 class="section-title">FALE CONOSCO</h2>
         
@@ -397,11 +382,11 @@
             <div style="display:flex;gap:15px;flex-wrap:wrap;margin-bottom:20px; justify-content: center;">
               <a class="whatsapp" href="https://wa.me/5511999999999?text=ol%c3%a1%2c%20gostaria%20de%20um%20or%c3%a7amento" target="_blank" aria-label="Entre em contato por WhatsApp">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M22 10V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v4"></path><path d="m22 10-7.2-5.74a2 2 0 0 0-2.6 0L2 10"></path><path d="M4 15h.01"></path><path d="M4 19h.01"></path><path d="M10 15h.01"></path><path d="M10 19h.01"></path><path d="M16 15h.01"></path><path d="M16 19h.01"></path><rect x="2" y="10" width="20" height="12" rx="2"></rect></svg>
-                WhatsApp
+              WhatsApp
               </a>
               <a href="tel:+5511999999999" class="tel-link" aria-label="Ligar para o número de contato">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                Ligar
+              Ligar
               </a>
             </div>
 
@@ -415,7 +400,7 @@
               </div>
             </form>
             <p style="color:red; font-size: 12px; margin-top: 20px;">* O envio de e-mail neste protótipo abrirá seu cliente de e-mail padrão.</p>
-          </div>
+        </div>
     </section>
   </main>
 
@@ -432,13 +417,13 @@
         const contactForm = document.getElementById('contactForm');
         const statusElement = document.getElementById('status');
         
-        // E-mail de destino para o formulário de contato
+        // E-mail de destino para o formulário de contato - **ATUALIZE AQUI**
         const RECIPIENT_EMAIL = 'orcamentos@gardenco.com.br'; 
 
         /**
-         * Simula a troca de página, mostrando apenas a view desejada
-         * @param {string} targetViewId - O ID da seção a ser exibida (ex: 'view-home').
-         */
+          * Simula a troca de página, mostrando apenas a view desejada
+          * @param {string} targetViewId - O ID da seção a ser exibida (ex: '#home').
+          */
         function switchPage(targetViewId) {
             let actualTargetId = targetViewId;
             
@@ -471,7 +456,11 @@
             // 3. Atualiza o estado ativo no menu (desktop e mobile)
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === actualTargetId.substring(5)) {
+                // Compara a parte do hash (ex: 'home') com a parte do ID da view (ex: 'view-home')
+                const linkHashPart = link.getAttribute('href').substring(1);
+                const viewIdPart = actualTargetId.substring(5);
+
+                if (linkHashPart === viewIdPart) {
                     link.classList.add('active');
                 }
             });
