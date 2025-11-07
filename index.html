@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Garden & CO — Paisagismo (Página Única)</title>
+  <meta name="description" content="Garden & CO Paisagismo: projetos personalizados, elegância natural e um único arquivo para toda a navegação." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- Variáveis e Reset Básico --- */
+    :root{    
+        --bg:#ffffff;    
+        --muted:#bdbdbd;    
+        --accent:#6b8f4a; /* Verde Acentuado - Usado no botão agora */
+        --black-rgba:rgba(0,0,0,0.75);    
+        --footer-color:#9b9b9b;
+        --header-height: 80px;    
+    }
+    *{box-sizing:border-box}
+    html, body {
+        height:100%;
+        margin:0;
+        font-family:montserrat,system-ui,-apple-system,segoe ui,roboto,"helvetica neue",arial;
+        color:#222;
+        /* AJUSTADO: Fundo agora é #f7f7f7 conforme solicitado. */
+        background-color: #f7f7f7; 
+        /* CORREÇÃO: Impede o scroll horizontal indesejado */
+        overflow-x: hidden; 
+    }
+
+    /* --- Tipografia e Títulos --- */
+    h1, h2, h3, h4 { font-family: oswald, sans-serif; }
+    h2.section-title{
+        font-family:oswald, sans-serif;
+        text-transform:uppercase;
+        letter-spacing:3px;
+        color:#333;
+        text-align:center;
+        margin: 0 0 30px; 
+        font-size: 32px;
+        border-bottom: 3px solid var(--accent);
+        display: inline-block;
+        padding-bottom: 10px;
+        width: auto;
+    }
+    
+    /* --- HEADER/MENU (Fixo) --- */
+    header{
+        position:fixed;
+        top:0; left:0; right:0;
+        z-index:1000; 
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:10px 18px;
+        height: var(--header-height);
+        background: var(--black-rgba); 
+        backdrop-filter: blur(8px);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .logo-wrap{display:flex;align-items:center;gap:14px}
+    .logo img{
+        width:160px;
+        height:160px;
+        object-fit: cover;
+        border-radius: 50%;
+        display:block;
+        background-color: #; 
+        transition: transform 0.3s ease;
+    }
+
+    /* Menu Desktop */
+    .desktop-nav { display: none; }
+    .desktop-nav ul {
+        list-style: none; padding: 0; margin: 0; display: flex; gap: 24px;
+    }
+    .desktop-nav a {
+        color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;
+        letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 0;
+        transition: color 0.3s, border-bottom 0.3s;
+    }
+    .desktop-nav a.active {
+        color: var(--accent); 
+        border-bottom: 2px solid var(--accent);
+    }
+    .desktop-nav a:hover { color: var(--accent); }
+
+    /* Hamburger (Mobile) */
+    .hamburger{width:44px;height:44px;border-radius:6px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .hamburger .bar{width:22px;height:2px;background:#fff;position:relative; transition: all 0.3s ease;}
+    .hamburger .bar::after, .hamburger .bar::before{content:'';position:absolute;left:0;width:22px;height:2px;background:#fff; transition: all 0.3s ease;}
+    .hamburger .bar::after{top:-7px;}
+    .hamburger .bar::before{top:7px;}
+    .hamburger.open .bar {background: transparent;}
+    .hamburger.open .bar::before {transform: rotate(-45deg); top: 0;}
+    .hamburger.open .bar::after {transform: rotate(45deg); top: 0;}
+
+    /* Menu Mobile Overlay */
+    .menu-overlay{
+        position:fixed; top: var(--header-height); left:0; right:0; bottom: 0;
+        background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.9));
+        z-index:900;
+        display:none; 
+        overflow-y: auto;
+    }
+    .menu-overlay.show { display: block; }
+    .menu-list{padding:8px 18px; list-style: none; margin: 0;}
+    .menu-item{padding:20px 16px;border-bottom:1px solid rgba(255,255,255,0.06);font-family:oswald, sans-serif;color:#fff;font-size:20px;text-transform:uppercase;letter-spacing:1px; display: block; text-decoration: none;}
+    .menu-item:hover, .menu-item.active {
+        color: var(--accent); background-color: rgba(255,255,255,0.05);
+    }
+
+    /* --- VISTAS/PÁGINAS --- */
+    main {
+        min-height: calc(100vh - 50px);
+    }
+
+    /* ESSENCIAL: Espaçamento no topo para TODAS as views que não são o Hero */
+    .view-container {
+        display: none; 
+        max-width:980px;
+        margin:0 auto;
+        padding: 40px 0px 60px;
+        padding-top: calc(var(--header-height) + 20px); 
+        min-height: 50vh;
+    }
+    /* #view-projetos, #view-home, e #view-quemsomos têm padding-top/max-width personalizado */
+    #view-projetos, #view-home, #view-quemsomos {
+        padding-top: 0; 
+        margin: 0;
+        max-width: 100%;
+        min-height: auto;
+    }
+
+
+    .view-container.active {
+        display: block;
+    }
+    
+    /* --- HOME/HERO (Ajustado para 100vh) --- */
+    #view-home {
+        background-color:transparent;
+    }
+    .hero{
+        position:relative;
+        height: 100vh; /* Altura total da tela */
+        min-height:600px;
+        display: flex; /* Mantido para flex-direction */
+        flex-direction: column; /* Itens empilhados verticalmente */
+    }
+
+    /* Estilo do Slider de Imagens */
+    .slider-wrapper {
+        position: absolute;
+        inset: 0; 
+        z-index: 0;
+        /* Garante que o slider não crie scroll horizontal */
+        overflow: hidden; 
+    }
+    .slide {
+        position: absolute;
+        /* CORREÇÃO DEFINITIVA: Aumenta o tamanho para cobrir qualquer borda */
+        width: 110%; 
+        height: 110%; 
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centraliza o slide perfeitamente */
+        
+        object-fit: cover; /* Garante que a imagem cubra todo o contêiner */
+        opacity: 0; 
+        transition: opacity 1.5s ease-in-out; 
+    }
+    .slide.active {
+        opacity: 1; 
+    }
+    /* Fim Estilo do Slider */
+
+    .overlay{
+        position:absolute;inset:0;
+        background:linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.35) 100%);
+        z-index:1;
+    }
+    .hero-center{
+        z-index:3;
+        text-align:center;
+        color:#fff;
+        padding:0 18px;
+        position:relative;
+        
+        padding-top: 18vh; 
+        margin: auto; 
+    }
+    
+    /* Ajuste para telas maiores, se necessário */
+    @media(min-width: 900px) {
+        .hero-center {
+            padding-top: 10vh; 
+        }
+    }
+
+
+    .hero-logo img{
+        max-width:360px; height:360px; object-fit: cover; border-radius: 50%;
+        display:block; margin:0 auto; box-shadow: 0 0 0 0px rgba(255,255,255,0.2);
+        transition: transform 0.3s ease;
+    }
+    .hero-title{font-family:oswald, sans-serif;font-size:36px;letter-spacing:2px;margin:-95px 0 8px}
+    .hero-sub{font-size:16px;color:rgba(255,255,255,0.92);max-width:680px;margin:0 auto;line-height:1.6}
+    
+    /* Conteúdo da Home que fica logo abaixo do Hero. */
+    .home-intro {
+        /* O fundo branco/claro desta e das outras seções está aqui: */
+        background-color: var(--bg); 
+        padding: 40px 18px 60px; 
+        text-align: center;
+        padding-top: 40px; 
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    /* --- NOVA SEÇÃO DE CONTATO DA HOME (home-contact-info) --- */
+    .home-contact-info {
+        padding: 40px 18px 60px;
+        background-color: var(--bg); 
+        text-align: center;
+    }
+    .home-contact-info-wrap {
+        max-width: 500px; 
+        margin: 0 auto;
+    }
+    .home-contact-info h2 {
+        font-family: oswald, sans-serif; 
+        font-size: 32px;
+        margin-bottom: 30px;
+        color: #555;
+    }
+    .contact-item {
+        display: flex;
+        align-items: flex-start; 
+        text-align: left;
+        margin-bottom: 25px;
+        gap: 15px;
+        border-bottom: 1px dashed #eee;
+        padding-bottom: 15px;
+    }
+    .contact-item:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .contact-item-icon {
+        color: var(--accent);
+        width: 30px;
+        flex-shrink: 0;
+    }
+    .contact-item-details strong {
+        display: block;
+        text-transform: uppercase;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+    .contact-item-details a, .contact-item-details span {
+        font-size: 16px;
+        font-weight: 400;
+        color: #333;
+        text-decoration: none;
+    }
+    .contact-item-details a:hover {
+        color: var(--accent);
+    }
+    .line-item {
+        display: flex; 
+        align-items: center;
+        margin-bottom: 5px; 
+    }
+    .line-item:last-child {
+        margin-bottom: 0;
+    }
+    .line-item-bullet {
+        width: 6px;
+        height: 6px;
+        background: var(--accent);
+        border-radius: 50%;
+        margin-right: 8px;
+        flex-shrink: 0; 
+    }
+    .photographer-note {
+        margin-top: 40px;
+        font-size: 12px;
+        color: var(--muted);
+        text-align: center;
+    }
+
+    /* --- BOTÕES DE CONTATO (Estilo base mantido) --- */
+    .whatsapp, .tel-link {
+        display:inline-flex; align-items: center; justify-content: center;
+        padding:12px 18px; border-radius:8px; color:#fff; font-weight:700;
+        text-decoration:none; transition: background-color 0.3s; gap: 8px;
+    }
+    .submit-button {
+        padding:12px 16px; border-radius:8px; border:none;
+        background:var(--accent); color:#fff; font-weight:700;
+        cursor:pointer; transition: background-color 0.3s, transform 0.1s;
+    }
+    .submit-button:hover { background: #5a7840; }
+    .submit-button:active { transform: scale(0.98); }
+
+    .nav-link {
+        text-decoration: none !important; 
+    }
+    
+    .whatsapp img {
+        margin-right: 0 !important; 
+        margin-left: -4px; 
+    }
+
+    /* --- QUEM SOMOS (about) - NOVO HERO DE TELA CHEIA --- */
+    #view-quemsomos {
+        padding: 0; 
+        margin: 0;
+        max-width: 100%;
+        min-height: auto;
+    }
+    
+    /* Novo Hero QUEM SOMOS (similar ao Projetos) */
+    .hero-quemsomos {
+        position: relative;
+        height: 100vh; 
+        background-image: url('https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/65f408ac9efce5546f505d7452c2e2007848b423/Gemini_Generated_Image_wrvo9ywrvo9ywrvo.png'); /* Imagem de fundo inspiradora */
+        background-size: cover;
+        background-position: center 30%;
+        display: flex;
+        align-items: flex-end; 
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        overflow: hidden; 
+        padding-top: var(--header-height); 
+    }
+
+    .hero-quemsomos::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0.85) 100%);
+        z-index: 1;
+    }
+
+    .hero-quemsomos .hero-content {
+        position: relative;
+        z-index: 2;
+        padding-bottom: 60px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 900px;
+        padding: 0 18px 60px;
+    }
+
+    .hero-quemsomos h2 {
+        font-family: oswald, sans-serif;
+        font-size: 48px;
+        margin: 0;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #fff;
+        line-height: 1.2;
+    }
+
+    .hero-quemsomos p {
+        font-size: 20px;
+        max-width: 600px;
+        margin-top: 15px;
+        line-height: 1.5;
+        color: rgba(255,255,255,0.9);
+    }
+    
+    /* Content Wrapper (onde ficam os cards) */
+    .quemsomos-content {
+        background-color: var(--bg);
+        padding: 40px 18px 60px;
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /* O container dos 2 cards que usa flex */
+    .about-content{ 
+        display: flex; 
+        flex-direction: column; 
+        gap: 30px; 
+        margin: 0 auto; 
+    }
+    .about-card {
+        background:var(--bg); 
+        padding:30px; 
+        border-radius:10px; 
+        text-align:left;
+        box-shadow:0 10px 25px rgba(20,20,20,0.1); 
+        border-left: 5px solid var(--accent); 
+        line-height: 1.6;
+        position: relative; 
+        z-index: 2; 
+    }
+    .about-card h3{
+        font-family:oswald, sans-serif; 
+        color:#333; 
+        margin:0 0 10px;
+        font-size: 24px; 
+        padding-bottom: 5px;
+        position: relative;
+    }
+    .about-card h3::after {
+        content: '';
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: var(--accent);
+        margin-top: 5px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+    .about-card ul { 
+        list-style: none; 
+        padding: 0; 
+        margin-top: 15px; 
+    }
+    .about-card ul li { 
+        padding: 10px 0; 
+        font-size: 16px; 
+        line-height: 1.5;
+        border-bottom: 1px dashed #eee; 
+    }
+    .about-card ul li:last-child { 
+        border-bottom: none; 
+        padding-bottom: 0;
+    }
+    .about-card ul li strong {
+        color: var(--accent);
+        display: block; 
+        margin-bottom: 5px; 
+        font-size: 16px;
+    }
+    
+    /* --- NOVOS ESTILOS PARA SEÇÃO PROJETOS (HERO E GALERIA) --- */
+    #view-projetos {
+        padding: 0; 
+        margin: 0;
+        max-width: 100%;
+        min-height: auto;
+    }
+    
+    .hero-projetos {
+        position: relative;
+        height: 100vh; /* Altura total da viewport */
+        background-image: url('https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/65f408ac9efce5546f505d7452c2e2007848b423/Gemini_Generated_Image_a3w27a3w27a3w27a.png'); /* Imagem de paisagem para o hero */
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: flex-end; /* Alinha o conteúdo ao final (seta) */
+        justify-content: center;
+        text-align: center;
+        color: #fff;
+        overflow: hidden; /* Garante que a seta não seja cortada */
+        /* Ajuste para o header fixo */
+        padding-top: var(--header-height); 
+    }
+
+    .hero-projetos::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.8) 100%);
+        z-index: 1;
+    }
+    
+    .hero-projetos .hero-content {
+        position: relative;
+        z-index: 2;
+        padding-bottom: 60px; /* Espaço para a seta */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-projetos h2 {
+        font-family: oswald, sans-serif;
+        font-size: 48px;
+        margin: 0;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: #fff;
+        line-height: 1.2;
+    }
+    .hero-projetos p {
+        font-size: 20px;
+        max-width: 600px;
+        margin-top: 15px;
+        line-height: 1.5;
+        color: rgba(255,255,255,0.9);
+    }
+
+    /* Seta para baixo */
+    .scroll-down-arrow {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: #fff;
+        font-size: 40px;
+        animation: bounce 2s infinite; /* Animação de "pulo" */
+    }
+    
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        40% {
+            transform: translateX(-50%) translateY(-15px);
+        }
+        60% {
+            transform: translateX(-50%) translateY(-7px);
+        }
+    }
+
+    /* Conteúdo da Galeria */
+    .projetos-content {
+        background-color: var(--bg);
+        padding: 40px 18px 60px;
+        max-width: 980px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .projetos-intro-text {
+        max-width: 700px;
+        margin: 0 auto 50px;
+        line-height: 1.7;
+        font-size: 16px;
+        color: #555;
+    }
+    .projetos-intro-text h3 {
+        font-family: oswald, sans-serif;
+        font-size: 32px;
+        color: #333;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    /* Galeria de Imagens */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: 1fr; /* Padrão mobile: 1 coluna */
+        gap: 20px; /* Mantido 20px para mobile */
+    }
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        cursor: pointer;
+    }
+    .gallery-item img {
+        width: 100%;
+        height: 250px; /* Altura fixa para uniformidade */
+        object-fit: cover;
+        display: block;
+        transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    }
+    /* Efeito de hover */
+    .gallery-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(255, 255, 255, 0); /* Inicialmente transparente */
+        transition: background-color 0.4s ease-in-out;
+        z-index: 1; /* Para ficar acima da imagem, mas abaixo do possível texto */
+    }
+    /* Efeito de semi-transparente no hover (opacity 0.7) */
+    .gallery-item:hover::before {
+        background-color: rgba(255, 255, 255, 0.3); /* Overlay branco transparente no hover */
+    }
+    .gallery-item:hover img {
+        transform: scale(1.05); /* Leve zoom no hover */
+        opacity: 0.7; /* Semi-transparente */
+    }
+
+
+    /* --- CONTATO (Form) --- */
+    .contact-card {
+        background:var(--bg); padding:30px; border-radius:10px;
+        box-shadow:0 15px 35px rgba(20,20,20,0.08);
+        max-width: 600px; /* Limite a largura do card de contato */
+        margin: 0 auto;
+    }
+    .contact-card input, .contact-card textarea {
+        padding:14px; border-radius:8px; border:1px solid #e6e6e6;
+        font-size:16px; width:100%; transition: border-color 0.3s;
+    }
+    .contact-card input:focus, .contact-card textarea:focus {
+        outline: none; border-color: var(--accent);
+    }
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    /* --- NOVOS ESTILOS PARA BOTÕES DE CONTATO --- */
+    .contact-button-grid {
+        display: flex;
+        flex-wrap: wrap; /* Permite quebra em telas menores */
+        gap: 15px;
+        margin-bottom: 30px;
+        justify-content: center;
+    }
+    
+    /* Links principais (largos) */
+    .contact-link-main {
+        flex: 2 1 180px; /* Cresce mais, base de 180px */
+        display:inline-flex; 
+        align-items: center; 
+        justify-content: center;
+        padding:12px 18px; 
+        border-radius:8px; 
+        color:#fff; 
+        font-weight:700;
+        text-decoration:none; 
+        transition: background-color 0.3s; 
+        gap: 8px;
+        min-height: 50px; /* Garante mesma altura */
+    }
+
+    /* Links sociais (estreitos) - LARGURA MENOR */
+    .contact-link-social {
+        flex: 1 1 50px; /* Cresce menos, base de 50px (só ícone) */
+        display:inline-flex; 
+        align-items: center; 
+        justify-content: center;
+        padding: 12px; /* Padding igual */
+        border-radius:8px; 
+        color:#fff; 
+        text-decoration:none; 
+        transition: background-color 0.3s;
+        min-height: 50px; /* Garante mesma altura */
+        max-width: 70px; /* Limita largura máxima */
+    }
+
+    /* Cores específicas dos links */
+    .whatsapp { background: var(--accent); }  
+    .whatsapp:hover { background: #5a7840; }  
+    .tel-link { background:#333; }
+    .tel-link:hover { background: #000; }
+    
+    .instagram-link { background: #E1306C; } /* Cor do Instagram */
+    .instagram-link:hover { background: #c11b58; }
+    
+    .facebook-link { background: #1877F2; } /* Cor do Facebook */
+    .facebook-link:hover { background: #115dc0; }
+    
+    
+    /* --- FOOTER --- */
+    footer{padding:24px;text-align:center;color:var(--footer-color); background: #f9f9f9; border-top: 1px solid #eee;}
+    
+    /* --- Lightbox / Modal para Galeria --- */
+    .lightbox {
+        display: none; /* Inicia oculto */
+        position: fixed;
+        z-index: 2000; /* Alto z-index para ficar acima de tudo */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9); /* Fundo preto semi-transparente */
+        backdrop-filter: blur(5px);
+        padding: 20px;
+        transition: opacity 0.3s ease;
+        align-items: center; /* Centraliza o conteúdo (flex necessário) */
+        justify-content: center;
+    }
+
+    .lightbox-content {
+        position: relative;
+        width: 100%;
+        max-width: 900px; /* Largura máxima da imagem */
+        animation: zoom-in 0.3s ease-out;
+        text-align: center;
+        margin: 0; /* Remove margin para melhor centralização com flex */
+    }
+
+    .lightbox-content img {
+        width: 100%;
+        height: auto;
+        max-height: 80vh; /* Para garantir que caiba na tela móvel */
+        display: block;
+        object-fit: contain; /* Garante que a imagem caiba sem cortar */
+        border-radius: 8px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        background: none;
+        border: none;
+        transition: color 0.3s, transform 0.3s;
+        z-index: 2001; /* Fica acima de tudo */
+        padding: 10px;
+        border-radius: 50%;
+        opacity: 0.8;
+    }
+
+    .lightbox-close:hover,
+    .lightbox-close:focus {
+        color: var(--accent);
+        text-decoration: none;
+        cursor: pointer;
+        transform: rotate(90deg);
+        opacity: 1;
+    }
+
+    @keyframes zoom-in {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+
+    /* --- MEDIA QUERY PARA DESKTOP --- */
+    @media(min-width:900px){
+        .desktop-nav { display: block; }
+        .hamburger{ display: none; }
+        .hero-title{font-size:48px}
+        .hero-sub{font-size:18px}
+        
+        /* Ajuste do QUEM SOMOS para 2 colunas no desktop */
+        .about-content { 
+            flex-direction: row; 
+            gap: 30px; 
+            align-items: flex-start; 
+        }
+        .about-card { flex: 1; }
+
+        /* AJUSTE: 3 colunas e GAP reduzido para 6px (30% de 20px) */
+        .gallery-grid {
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 6px; 
+        }
+        .hero-projetos h2 {
+            font-size: 60px;
+        }
+        .hero-projetos p {
+            font-size: 22px;
+        }
+        .hero-quemsomos h2 { 
+            font-size: 60px; 
+        }
+        .hero-quemsomos p { 
+            font-size: 22px; 
+        }
+        
+        .lightbox-close {
+            top: 40px;
+            right: 40px;
+        }
+    }
+    @media (max-width: 600px) {
+        .lightbox-content {
+            margin: 10% auto;
+        }
+        .lightbox-close {
+            font-size: 30px;
+            top: 10px;
+            right: 10px;
+        }
+        /* Em telas pequenas, botões sociais ocupam 50% */
+        .contact-link-social {
+             flex-basis: calc(50% - 7.5px);
+             max-width: none;
+        }
+    }
+  </style>
+</head>
+<body>
+  
+  <nav role="navigation" aria-label="Menu Principal e Identidade">
+    <header id="mainHeader">
+      <div class="logo-wrap">
+        <a href="#home" class="nav-link" aria-label="Ir para o início da página">
+          <div class="logo">
+            <!-- LOGO DO CABEÇALHO (usando a imagem circular original) -->
+            <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/2d90145583afd6989dbe6b90984e56e78d34760c/GARDEN%20%26%20CO.%20Logo.svg" alt="Logo Garden & CO Paisagismo">
+          </div>
+        </a>
+      </div>
+      
+      <nav class="desktop-nav">
+          <ul>
+              <li><a href="#home" class="nav-link active">INÍCIO</a></li>
+              <li><a href="#quemsomos" class="nav-link">QUEM SOMOS</a></li>
+              <li><a href="#projetos" class="nav-link">NOSSOS PROJETOS</a></li>
+              <li><a href="#contato" class="nav-link">CONTATO</a></li>
+          </ul>
+      </nav>
+      
+      <div class="hamburger" id="hamburger" aria-label="Abrir menu móvel" role="button" aria-expanded="false" aria-controls="menuoverlay">
+        <div class="bar"></div>
+      </div>
+    </header>
+  </nav>
+
+  <div class="menu-overlay" id="menuoverlay">
+    <nav>
+      <ul class="menu-list">
+        <li><a class="menu-item nav-link" href="#home">início</a></li>
+        <li><a class="menu-item nav-link" href="#quemsomos">quem somos</a></li>
+        <li><a class="menu-item nav-link" href="#projetos">nossos projetos</a></li>
+        <li><a class="menu-item nav-link" href="#contato">contato</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <main>
+    
+    <section id="view-home" class="view-container active">
+        <div class="hero">
+            
+            <div class="slider-wrapper">
+                
+                <img class="slide active" src="https://raw.githubusercontent.com/DarlenDinizAnalist/GardenCO/aae8348ffcab75cc4941c176cd8de8bbd01eb1db/R.jpg" alt="Fundo de jardim com paisagismo" loading="eager">
+                
+                <img class="slide" src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/65f408ac9efce5546f505d7452c2e2007848b423/Gemini_Generated_Image_wrvo9ywrvo9ywrvo.png" alt="Projeto de jardim residencial moderno" loading="lazy">
+                
+                <img class="slide" src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/65f408ac9efce5546f505d7452c2e2007848b423/Gemini_Generated_Image_a3w27a3w27a3w27a.png" alt="Paisagismo com folhagens verdes e pedras" loading="lazy">
+
+            </div>
+            
+            <div class="overlay"></div>
+
+            <div class="hero-center">
+              <div class="hero-logo">
+                <!-- LOGO CENTRAL DO HERO: ALTERADO PARA O NOVO SVG NO FORMATO RAW -->
+                <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/2aaac7d6e7b5acafb6243e50526034a066e3b884/GARDEN%20%26%20CO.%20Logo.svg" alt="Garden & CO Paisagismo">
+              </div>
+              <h1 class="hero-title">GARDEN & CO.</h1>
+              <p class="hero-sub">Paisagismo com elegância natural. Projetos personalizados e soluções sustentáveis para residências e empresas.</p>
+              
+              <div style="margin-top: 20px;"></div>
+                <a href="#projetos" class="submit-button nav-link" style="font-size: 16;">Ver Projetos</a>
+
+            </div>
+        </div>
+        
+        <div class="home-intro">
+            <h2 class="section-title">Nossa Filosofia</h2>
+            <p style="max-width: 600px; margin: 0 auto; line-height: 1.6;">Trabalhamos para criar ambientes que unam qualidade, harmonia e tranquilidade, sempre com respeito à natureza e comprometimento com o cliente.<br>Nossa filosofia é entregar paisagismo com propósito, valorizando cada espaço com confiança e excelência.</p>
+        </div>
+
+        <div class="home-contact-info">
+            <div class="home-contact-info-wrap">
+                <h2>CONTATO</h2>
+                
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                    </div>
+                    <div class="contact-item-details">
+                        <strong>TELEFONES</strong>
+                        <span class="line-item">
+                            <span class="line-item-bullet"></span>
+                            <a href="tel:+5531991394907">(31) 99139-4907</a>
+                        </span>
+                        <span class="line-item">
+                             	<span class="line-item-bullet"></span>
+                            <a href="tel:+5531999575447">(31) 99957-5447</a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    </div>
+                    <div class="contact-item-details">
+                        <strong>ENDEREÇOS</strong>
+                        <span class="line-item">
+                            <span class="line-item-bullet"></span>
+                            Rua Stelita Vieira dos Anjos Santos, Sarzedo, MG
+                        </span>
+                        <span class="line-item">
+                            <span class="line-item-bullet"></span>
+                            Av. Nair Martins Drumond, 199 - Jardim Nair, Brumadinho, MG
+                        </span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-item-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="contact-item-details">
+                        <strong>E-MAIL</strong>
+                        <a href="mailto:gardencopaisagismo@gmail.com">gardencopaisagismo@gmail.com</a>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <a class="whatsapp" href="https://wa.me/5531991394907?text=Ol%c3%a1%2c%20gostaria%20de%20falar%20sobre%20um%20projeto%20de%20paisagismo." target="_blank" aria-label="Conversar no WhatsApp">
+                        <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/9784162f86c41ffc45705604f38a521fef991dea/ChatGPT%20Image%207%20de%20nov.%20de%202025%2C%2007_22_06.png" alt="Ícone WhatsApp" width="20" height="20">
+                        Falar no WhatsApp
+                    </a>
+                </div>
+
+                <p class="photographer-note">Criação: Isabelly Diniz</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="view-quemsomos" class="view-container">
+        
+        <div class="hero-quemsomos">
+            <div class="hero-content">
+                <h2>NÓS SOMOS GARDEN & CO.</h2>
+                <p>Criamos projetos de paisagismo que transformam espaços, promovem bem-estar e celebram a beleza natural.</p>
+            </div>
+            <!-- Seta para rolar para o conteúdo abaixo --><a href="#quemsomos-content-wrapper" class="scroll-down-arrow nav-link" aria-label="Rolar para ver o conteúdo">
+                &#x2193; 
+            </a>
+        </div>
+        
+        <!-- Conteúdo que aparece ao rolar --><div class="quemsomos-content" id="quemsomos-content-wrapper">
+            <h2 class="section-title">Nossa História e Propósito</h2> 
+            
+            <div id="garden-co" class="about-content">
+                
+                <div class="about-card">
+                    <h3>NOSSA MISSÃO</h3>
+                    <p>
+                        Somos uma empresa especializada em paisagismo, que há 15 anos é dedicada a transformar espaços em ambientes harmônicos, acolhedores e cheios de vida.
+                    </p>
+                    <p>
+                        Nosso propósito é unir qualidade, beleza e funcionalidade em cada projeto, criando composições que transmitam tranquilidade e equilíbrio a quem vive e circula pelo espaço.
+                    </p>
+                    <p>
+                        Trabalhamos com comprometimento, sensibilidade e técnica, respeitando a natureza e valorizando cada detalhe.
+                    </p>
+                    <p>
+                        Acreditamos que o paisagismo vai além da estética — ele é uma forma de conectar pessoas com o ambiente, promovendo bem-estar e inspirando novas experiências.
+                    </p>
+                    <p>
+                        Com confiança, dedicação e amor pelo que fazemos, buscamos sempre superar expectativas, entregando resultados que unem profissionalismo e harmonia natural.
+                    </p>
+                </div>
+
+                <div class="about-card">
+                    <h3>POR QUE NOS ESCOLHER?</h3>
+                    <ul>
+                        <li><strong>Paixão pelo Verde:</strong> Cada projeto é tratado com a máxima atenção e amor pela natureza.</li>
+                        <li><strong>Especialização:</strong> Foco em jardins nativos e soluções de baixa manutenção.</li>
+                        <li><strong>Personalização:</strong> Criamos projetos únicos, desenhados para a sua vida e o seu ambiente.</li>
+                        <li><strong>Compromisso:</strong> Do conceito inicial à manutenção pós-entrega.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-projetos" class="view-container">
+        <div class="hero-projetos">
+            <div class="hero-content">
+                <h2>NOSSOS PROJETOS</h2>
+                <!-- MENSAGEM 1 ALTERADA --><p>Do seu esboço à realidade: Criamos paisagens que respiram vida.</p>
+            </div>
+            <a href="#projetos-galeria-content" class="scroll-down-arrow nav-link" aria-label="Rolar para ver os projetos">
+                &#x2193; 
+            </a>
+        </div>
+
+        <div class="projetos-content" id="projetos-galeria-content">
+            <div class="projetos-intro-text">
+                <!-- TÍTULO ALTERADO --><h3>PAISAGISMO QUE TRASNFORMA, RENOVA E VALORIZA</h3>
+                <!-- MENSAGEM 2 ALTERADA --><p>Deixe-se inspirar por nossa galeria — cada projeto é uma expressão de beleza, equilíbrio e bem-estar</p>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Itens 1 a 6 (NOVOS LINKS E DATAS PARA LIGHTBOX) --><div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/1.jpeg" data-alt="Paisagismo em área de piscina e lazer.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/1.jpeg" alt="Paisagismo em área de piscina e lazer." loading="lazy">
+                </div>
+                <div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/2.jpeg" data-alt="Jardim exuberante com plantas tropicais.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/2.jpeg" alt="Jardim exuberante com plantas tropicais." loading="lazy">
+                </div>
+                <div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/3.png" data-alt="Projeto de jardim com iluminação noturna.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/3.png" alt="Projeto de jardim com iluminação noturna." loading="lazy">
+                </div>
+                <div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/4.png" data-alt="Design de entrada com plantas e vasos.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/4.png" alt="Design de entrada com plantas e vasos.">
+                </div>
+                <div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/5.png" data-alt="Detalhe de arranjo paisagístico moderno.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/5.png" alt="Detalhe de arranjo paisagístico moderno.">
+                </div>
+                <div class="gallery-item" data-full-src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad086017761079267aef59324c294775856ef/6.png" data-alt="Caminho de jardim com pedras e folhagens.">
+                    <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/dba7ad08601761079267aef59324c294775856ef/6.png" alt="Caminho de jardim com pedras e folhagens.">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="view-contato" class="view-container">
+        <h2 class="section-title">FALE CONOSCO</h2>
+        
+        <div class="contact-card">
+            <p style="margin:0 0 20px;color:var(--muted); text-align: center; font-size: 18px;">Entre em contato para orçamentos, visitas técnicas e agendamentos. Responderemos o mais breve possível!</p>
+            
+                <!-- [INÍCIO DA ALTERAÇÃO] Grid de Botões de Contato --><div class="contact-button-grid">
+                    <!-- Link Largo 1: WhatsApp --><a class="contact-link-main whatsapp" href="https://wa.me/5531991394907?text=Ol%c3%a1%2c%20gostaria%20de%20falar%20sobre%20um%20projeto%20de%20paisagismo." target="_blank" aria-label="Conversar no WhatsApp">
+                        <img src="https://raw.githubusercontent.com/DarlenDinizAnalist/garden-co-site/9784162f86c41ffc45705604f38a521fef991dea/ChatGPT%20Image%207%20de%20nov.%20de%202025%2C%2007_22_06.png" alt="Ícone WhatsApp" width="20" height="20">
+                        Falar no WhatsApp
+                    </a>
+                    
+                    <!-- Link Largo 2: Ligar Agora (VINCULADO AO PRIMEIRO NÚMERO) --><a href="tel:+5531991394907" class="contact-link-main tel-link" aria-label="Ligar para o número de contato">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: -4px;"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 3.08 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        Ligar Agora
+                    </a>
+                    
+                    <!-- Link Estreito 1: Instagram (NOVO) --><a href="https://www.instagram.com/gardencopaisagismo/" class="contact-link-social instagram-link" target="_blank" aria-label="Ver nosso Instagram">
+                        <!-- Ícone SVG Inline do Instagram --><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </a>
+                    
+                    <!-- Link Estreito 2: Facebook (NOVO) --><a href="https://www.facebook.com/people/Garden-Paisagismo/pfbid02gqzzJdXLwFCz5zGbMR6YUMuTNxjKPWWYAPA5EHqgN4ZJa8gjpyyBEJNMXszo7oaXl/?mibextid=wwXIfr&rdid=9cG1UCwpz4oPK7vE&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1FYjaMu5Gn%2F%3Fmibextid%3DwwXIfr" class="contact-link-social facebook-link" target="_blank" aria-label="Ver nosso Facebook">
+                        <!-- Ícone SVG Inline do Facebook (com fill="currentColor") --><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                    </a>
+                </div>
+                <!-- [FIM DA ALTERAÇÃO] Grid de Botões de Contato --><!-- [INÍCIO DA ALTERAÇÃO] Formulário agora usa Formspree --><!-- 1. ATUALIZE O 'action' COM SEU LINK DO FORMSpree --><form id="contact-form" action="https://formspree.io/f/SEU_ID_AQUI" method="POST">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefone">Telefone / WhatsApp</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem / Detalhes do Projeto</label>
+                        <textarea id="mensagem" name="mensagem" rows="5" placeholder="Descreva seu projeto ou dúvida aqui..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-button" style="width: 100%;">ENVIAR SOLICITAÇÃO</button>
+                    
+                    <!-- 2. Adicionado campo de status do formulário --><p id="form-status" style="margin-top: 15px; text-align: center; font-weight: 600; font-size: 16px;"></p>
+                </form>
+        </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 Garden & CO Paisagismo. Todos os direitos reservados. Projeto de Página Única.</p>
+  </footer>
+
+<!-- Lightbox/Modal de Imagem - Adicionado após o footer --><div id="lightbox" class="lightbox">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Fechar galeria de imagem">&times;</button>
+    <div class="lightbox-content">
+        <img id="lightbox-image" src="" alt="">
+    </div>
+</div>
+
+  <script>
+    /* --- LÓGICA DE NAVEGAÇÃO (PÁGINA ÚNICA) --- */
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const viewContainers = document.querySelectorAll('.view-container');
+        const hamburger = document.getElementById('hamburger');
+        const menuOverlay = document.getElementById('menuoverlay');
+        const menuItems = document.querySelectorAll('.menu-item');
+        let currentViewId = '#home'; // Corrigido para usar o ID do link, não o da view
+
+        // 1. Função de Navegação
+        function navigateTo(targetId) {
+            // Adiciona 'view-' ao ID do hash para encontrar a seção correspondente (ex: #home -> #view-home)
+            const viewSelector = targetId.startsWith('#') ? `#view-${targetId.substring(1)}` : `#view-${targetId}`;
+            const targetView = document.querySelector(viewSelector);
+            
+            if (!targetView) return;
+
+            // Esconde todas as seções e remove a classe 'active'
+            viewContainers.forEach(view => {
+                view.classList.remove('active');
+            });
+
+            // Mostra a seção de destino e adiciona a classe 'active'
+            targetView.classList.add('active');
+            currentViewId = targetId;
+
+            // Atualiza a classe 'active' nos links de navegação
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === targetId) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Fecha o menu móvel (se aberto)
+            closeMobileMenu();
+        }
+
+        // 2. Listeners para os links de navegação
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                
+                // Impede o comportamento padrão de link (que rolaria para o topo)
+                e.preventDefault();
+                
+                // Se for o link da seta para baixo (em qualquer hero)
+                if (link.classList.contains('scroll-down-arrow')) {
+                    // Pega o ID do alvo da seta (ex: #quemsomos-content-wrapper ou #projetos-galeria-content)
+                    const targetContentId = href.substring(1); 
+                    const targetElement = document.getElementById(targetContentId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                } else {
+                    // Para todos os outros links de navegação (Menu)
+                    navigateTo(href);
+                    
+                    // Rola para o topo da view de destino
+                    setTimeout(() => {
+                        let targetElement;
+                        if (href === '#home' || href === '#projetos' || href === '#quemsomos') {
+                            targetElement = document.querySelector(href.replace('#', '#view-'));
+                        } else {
+                            targetElement = document.querySelector(href.replace('#', '#view-'));
+                        }
+                        
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 10);
+                }
+                
+                // Atualiza a URL no histórico do navegador (apenas para links do menu)
+                if (!link.classList.contains('scroll-down-arrow')) {
+                    window.history.pushState(null, null, href);
+                }
+            });
+        });
+        
+        // 3. Inicialização e Lógica do Hash (ao carregar a página e voltar/avançar no histórico)
+        function handleHashChange() {
+            const hash = window.location.hash || '#home';
+            navigateTo(hash);
+            
+            // Executa um scroll suave após a navegação inicial para corrigir o posicionamento
+            setTimeout(() => {
+                let targetElement = document.querySelector(hash.replace('#', '#view-'));
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'auto', block: 'start' });
+                }
+            }, 10);
+        }
+        
+        window.addEventListener('popstate', handleHashChange);
+        handleHashChange(); // Executa na carga inicial
+
+        // 4. Lógica do Menu Mobile
+        function toggleMobileMenu() {
+            const isMenuOpen = menuOverlay.classList.toggle('show');
+            hamburger.classList.toggle('open', isMenuOpen);
+            hamburger.setAttribute('aria-expanded', isMenuOpen);
+            document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto'; // Bloqueia o scroll do body
+        }
+
+        function closeMobileMenu() {
+            if (menuOverlay.classList.contains('show')) {
+                toggleMobileMenu();
+            }
+        }
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
+
+        // 5. Lógica do Slider de Imagens (Home/Hero)
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            if (slides.length > 0) {
+                // Remove 'active' do slide atual
+                slides[currentSlide].classList.remove('active');
+                
+                // Calcula o próximo slide (loop)
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Adiciona 'active' ao novo slide
+                slides[currentSlide].classList.add('active');
+            }
+        }
+
+        // Inicia a troca de slides a cada 5 segundos
+        if(slides.length > 0) {
+            setInterval(nextSlide, 5000);
+        }
+        
+        /* 6. [CORRIGIDO] Lógica de Submissão do Formulário (via Formspree AJAX) */
+        const contactForm = document.getElementById('contact-form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Impede o envio padrão do navegador
+                
+                const form = event.target;
+                const data = new FormData(form);
+                const status = document.getElementById('form-status');
+                const submitButton = contactForm.querySelector('button[type="submit"]');
+
+                // Atualiza o botão e o status
+                submitButton.disabled = true;
+                submitButton.textContent = 'ENVIANDO...';
+                status.textContent = '';
+                status.style.color = '#333';
+
+                fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        // Sucesso
+                        status.textContent = "Obrigado! Sua mensagem foi enviada.";
+                        status.style.color = 'var(--accent)';
+                        form.reset();
+                    } else {
+                        // Erro (ex: configuração do Formspree)
+                        response.json().then(data => {
+                            if (Object.hasOwn(data, 'errors')) {
+                                status.textContent = data["errors"].map(error => error["message"]).join(", ");
+                            } else {
+                                status.textContent = "Erro ao enviar. Tente novamente.";
+                            }
+                            status.style.color = 'red';
+                        });
+                    }
+                }).catch(error => {
+                    // Erro de rede
+                    status.textContent = "Erro de rede. Verifique sua conexão.";
+                    status.style.color = 'red';
+                }).finally(() => {
+                    // Reabilita o botão
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'ENVIAR SOLICITAÇÃO';
+                });
+            });
+        }
+        
+        // 7. Lógica do Lightbox (Galeria)
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        function openLightbox(src, alt) {
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            lightbox.style.display = 'flex'; // Usar flex para centralizar
+            document.body.style.overflow = 'hidden'; // Bloqueia o scroll do body
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Pega a URL da imagem em alta resolução e o texto alternativo
+                const fullSrc = item.getAttribute('data-full-src');
+                const altText = item.getAttribute('data-alt');
+                openLightbox(fullSrc, altText);
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        // Fecha o lightbox se clicar fora da imagem
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Fecha o lightbox ao pressionar ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && lightbox.style.display === 'flex') {
+                closeLightbox();
+            }
+        });
+
+    });
+  </script>
+
+</body>
+</html>
